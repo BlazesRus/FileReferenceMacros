@@ -13,7 +13,13 @@ Example .vcxproj needed file blocks(for pch.h inside project folder assuming wit
     <PCHOutput>$(AppFolder)$(Configuration)/pch.pch</PCHOutput>
     <RawPCH>$(PCHHeader)</RawPCH>
   </PropertyGroup>
-
+  <ItemDefinitionGroup Label="Windows Item Definition Group">
+    <!-- Condition="'$(Platform)'=='Win32' Or '$(Platform)'=='x64'"-->
+    <ClCompile>
+      <PreprocessorDefinitions Condition="'$(Configuration)'=='Debug'">PCHFile=$(RawPCH);WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)'=='Release'">PCHFile=$(RawPCH);NDEBUG;WIN32;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <ItemGroup>
     <BuildMacro Include="RawPCH">
       <Value>$(RawPCH)</Value>
